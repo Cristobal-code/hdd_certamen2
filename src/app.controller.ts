@@ -1,12 +1,18 @@
 import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Feriado } from './models/Feriado';
+import { FeriadoService } from './services/feriado.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly feriadoService: FeriadoService) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('/feriados')
+  getFeriados(): Promise<Feriado[]> {
+    return this.feriadoService.getFeriados();
+  }
+
+  @Get('/feriados/irrenunciables')
+  getFeriadosIrrenunciables(): Promise<Feriado[]> {
+    return this.feriadoService.getFeriados(true);
   }
 }
